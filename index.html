@@ -30,7 +30,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Glass container card */
+        /* High-gloss glass container card */
         .light-glass-card {
             background: rgba(255, 255, 255, 0.35); 
             backdrop-filter: blur(30px) saturate(160%);
@@ -101,15 +101,22 @@
             box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
         }
 
-        /* High-speed hardware optimized display frame */
-        iframe {
+        /* Scrollable container that allows native script access */
+        .viewer-container {
             width: 100%;
             height: 750px;
-            border: none;
+            overflow-y: scroll;
             border-radius: 16px;
-            background-color: #ffffff;
             box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            background-color: #ffffff;
+        }
+
+        /* Object wrapper that opens the PDF natively into separate view pages */
+        object {
+            width: 100%;
+            height: 2500px; /* Tall height allocation to distribute individual sheet offsets */
             display: block;
+            border: none;
         }
     </style>
 </head>
@@ -123,31 +130,55 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <!-- Look below to change the manual total numbers -->
-                    <div id="counter-pres" class="pdf-counter-badge">LOADING...</div>
+                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 14</div>
                 </div>
-                <iframe id="iframe-pres" src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                <div class="viewer-container" id="scroll-pres">
+                    <!-- toolbar=0 strips download panel and loads file natively -->
+                    <object data="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" type="application/pdf">
+                        <p>Your browser does not support inline PDFs.</p>
+                    </object>
+                </div>
             </div>
 
             <!-- BOTTOM PANEL: DISNEY Message Schedule -->
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div id="counter-sched" class="pdf-counter-badge">LOADING...</div>
+                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 2</div>
                 </div>
-                <iframe id="iframe-sched" src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                <div class="viewer-container" id="scroll-sched">
+                    <object data="DISNEY_Message%20Schedule.pdf#toolbar=0" type="application/pdf">
+                        <p>Your browser does not support inline PDFs.</p>
+                    </object>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Active Scroll Listener and Page Calculator -->
     <script>
-        // CHANGE THESE TWO NUMBERS TO YOUR EXACT TOTAL PAGES:
-        const REAL_TOTAL_PRES_PAGES = 126; 
-        const REAL_TOTAL_SCHED_PAGES = 5;   
+        function setupTracker(containerId, badgeId, totalPages) {
+            const container = document.getElementById(containerId);
+            const badge = document.getElementById(badgeId);
 
-        // This applies the corrected metrics cleanly onto your tracking badges
-        document.getElementById('counter-pres').textContent = `PAGE 1 / ${REAL_TOTAL_PRES_PAGES}`;
-        document.getElementById('counter-sched').textContent = `PAGE 1 / ${REAL_TOTAL_SCHED_PAGES}`;
+            container.addEventListener('scroll', () => {
+                const maxScroll = container.scrollHeight - container.clientHeight;
+                if (maxScroll <= 0) return;
+                
+                // Track scroll math positions across the viewport canvas
+                const scrollPercent = container.scrollTop / maxScroll;
+                let currentPage = Math.ceil(scrollPercent * totalPages);
+                
+                if (currentPage <= 0) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                badge.textContent = `PAGE ${currentPage} / ${totalPages}`;
+            });
+        }
+
+        // Initialize trackers
+        setupTracker('scroll-pres', 'counter-pres', 126);
+        setupTracker('scroll-sched', 'counter-sched', 5);
     </script>
 
 </body>
