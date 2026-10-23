@@ -89,7 +89,7 @@
             letter-spacing: -0.2px;
         }
 
-        /* Static Total Pages info badge */
+        /* Dynamic Counter indicator */
         .pdf-counter-badge {
             background: #007aff;
             color: #ffffff;
@@ -99,19 +99,37 @@
             border-radius: 980px;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+            transition: background 0.3s ease;
         }
 
-        /* Ultra-clean outer framing container box */
-        .iframe-wrapper {
+        /* Native tracking shell frame */
+        .scroll-capture-window {
             width: 100%;
-            height: 800px; /* Generous, tall presentation view space */
+            height: 750px;
+            overflow-y: scroll;
             border-radius: 16px;
-            overflow: hidden; /* Hard blocks any overflow or double spacing shapes */
+            position: relative;
             box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
             background-color: #ffffff;
         }
 
-        /* High-speed hardware accelerated iframe viewports */
+        /* Height calibration canvas mapped inside the custom scroll frame */
+        .height-simulator-canvas {
+            width: 100%;
+            position: relative;
+            pointer-events: none; /* Allows tracking events to flow through cleanly */
+        }
+
+        /* Fixed viewport shield holding the active frame content */
+        .sticky-frame-viewport {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 750px;
+            pointer-events: auto;
+        }
+
         iframe {
             width: 100%;
             height: 100%;
@@ -130,11 +148,15 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <div class="pdf-counter-badge">126 PAGES</div>
+                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 126</div>
                 </div>
-                <div class="iframe-wrapper">
-                    <!-- toolbar=0 hides native browser print and download systems -->
-                    <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                <div class="scroll-capture-window" id="window-pres">
+                    <!-- Height allocation calibrated to cleanly map 126 pages natively -->
+                    <div class="height-simulator-canvas" style="height: 12000px;">
+                        <div class="sticky-frame-viewport">
+                            <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0&navpanes=0&scrollbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -142,14 +164,45 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div class="pdf-counter-badge">5 PAGES</div>
+                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 5</div>
                 </div>
-                <div class="iframe-wrapper">
-                    <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                <div class="scroll-capture-window" id="window-sched">
+                    <!-- Height allocation calibrated for 5 pages natively -->
+                    <div class="height-simulator-canvas" style="height: 1500px;">
+                        <div class="sticky-frame-viewport">
+                            <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0&navpanes=0&scrollbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Active Alignment Track Engine Script -->
+    <script>
+        function initScrollTracker(windowId, badgeId, totalPages) {
+            const scrollWindow = document.getElementById(windowId);
+            const badge = document.getElementById(badgeId);
+
+            scrollWindow.addEventListener('scroll', () => {
+                const maxScrollablePixels = scrollWindow.scrollHeight - scrollWindow.clientHeight;
+                if (maxScrollablePixels <= 0) return;
+
+                // Capture exact position from website container layer
+                const scrollRatio = scrollWindow.scrollTop / maxScrollablePixels;
+                let calculatedPage = Math.ceil(scrollRatio * totalPages);
+
+                if (calculatedPage <= 0) calculatedPage = 1;
+                if (calculatedPage > totalPages) calculatedPage = totalPages;
+
+                badge.textContent = `PAGE ${calculatedPage} / ${totalPages}`;
+            });
+        }
+
+        // Active layout mapping listeners
+        initScrollTracker('window-pres', 'counter-pres', 126);
+        initScrollTracker('window-sched', 'counter-sched', 5);
+    </script>
 
 </body>
 </html>
