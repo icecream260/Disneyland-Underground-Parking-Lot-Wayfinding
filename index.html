@@ -21,7 +21,7 @@
             background-size: 400% 400%;
             animation: liquidFlow 18s ease infinite;
             background-attachment: fixed;
-            padding: 24px;
+            padding: 40px 24px;
         }
 
         @keyframes liquidFlow {
@@ -30,7 +30,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Bright, high-gloss liquid glass pane stretched wider for two documents */
+        /* Expanded high-gloss glass card container optimized for vertical reading layout */
         .light-glass-card {
             background: rgba(255, 255, 255, 0.35); 
             backdrop-filter: blur(30px) saturate(160%);
@@ -41,8 +41,8 @@
             border-left: 1.5px solid rgba(255, 255, 255, 0.4);
             border-right: 1px solid rgba(255, 255, 255, 0.2);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            max-width: 1200px;
+            padding: 50px 40px;
+            max-width: 1300px;
             width: 100%;
             text-align: center;
             box-shadow: 0 20px 50px -12px rgba(100, 116, 139, 0.15),
@@ -51,43 +51,44 @@
 
         h1 {
             color: #334155;
-            font-size: 1.8rem;
-            margin-bottom: 28px;
+            font-size: 2rem;
+            margin-bottom: 40px;
             font-weight: 600;
             letter-spacing: -0.4px;
         }
 
-        /* Responsive flex grid container for the two documents */
-        .pdf-grid {
+        /* Clean vertical stack setup with generous block padding gaps */
+        .pdf-stack {
             display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
+            gap: 48px;
+            align-items: center;
+            width: 100%;
         }
 
-        /* Individual PDF box layout */
+        /* Full width structural box container */
         .pdf-box {
-            flex: 1;
-            min-width: 340px; /* Forces layout to stack cleanly on smaller screens */
+            width: 100%;
             text-align: left;
         }
 
         .pdf-title {
             color: #475569;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             padding-left: 4px;
+            letter-spacing: -0.2px;
         }
 
-        /* Clean, borderless PDF viewport frames */
+        /* Massive, edge-to-edge structural iframe viewports */
         iframe {
             width: 100%;
-            height: 650px; /* Comfortably tall scrolling viewport */
+            height: 750px;
             border: none;
             border-radius: 16px;
             background-color: #ffffff;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
         }
     </style>
 </head>
@@ -96,18 +97,17 @@
     <div class="light-glass-card">
         <h1>Disneyland Underground Parking Lot Wayfinding</h1>
 
-        <div class="pdf-grid">
-            <!-- Left PDF Panel: Final Presentation (Fixed Casing for F and P) -->
+        <div class="pdf-stack">
+            <!-- TOP PANEL: Final Presentation (Prioritized immediate priority load) -->
             <div class="pdf-box">
                 <div class="pdf-title">Final Presentation</div>
-                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" oncontextmenu="return false;"></iframe>
+                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
             </div>
 
-            <!-- Right PDF Panel: DISNEY Message Schedule -->
+            <!-- BOTTOM PANEL: DISNEY Message Schedule (Standard load) -->
             <div class="pdf-box">
                 <div class="pdf-title">DISNEY Message Schedule</div>
-                <!-- toolbar=0 strips standard user interface options -->
-                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" oncontextmenu="return false;"></iframe>
+                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
             </div>
         </div>
     </div>
