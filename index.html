@@ -89,7 +89,7 @@
             letter-spacing: -0.2px;
         }
 
-        /* Dynamic Counter indicator */
+        /* Static Total Pages info badge */
         .pdf-counter-badge {
             background: #007aff;
             color: #ffffff;
@@ -101,38 +101,22 @@
             box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
         }
 
-        /* Native web layout viewer window (Strips out secondary scrollbars entirely) */
-        .viewer-container {
+        /* Ultra-clean outer framing container box */
+        .iframe-wrapper {
             width: 100%;
-            height: 750px;
-            overflow-y: scroll;
+            height: 800px; /* Generous, tall presentation view space */
             border-radius: 16px;
+            overflow: hidden; /* Hard blocks any overflow or double spacing shapes */
             box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
             background-color: #ffffff;
-            -webkit-overflow-scrolling: touch;
         }
 
-        /* Beautiful web page components mapped out cleanly */
-        .slide-canvas {
+        /* High-speed hardware accelerated iframe viewports */
+        iframe {
             width: 100%;
-            background: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* This creates clean page block partitions inside the code box */
-        .slide-page-block {
-            width: 100%;
-            height: 746px; /* Matches frame constraints perfectly to represent pages */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-bottom: 4px solid #f1f5f9;
-            color: #64748b;
-            font-size: 1.2rem;
-            background: #ffffff;
+            height: 100%;
+            border: none;
+            display: block;
         }
     </style>
 </head>
@@ -146,16 +130,11 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 126</div>
+                    <div class="pdf-counter-badge">126 PAGES</div>
                 </div>
-                <div class="viewer-container" id="scroll-pres">
-                    <div class="slide-canvas">
-                        <!-- Custom layout blocks representing separate pages -->
-                        <div class="slide-page-block"><h3>[Final Presentation Content - Slide 1]</h3></div>
-                        <div class="slide-page-block"><h3>[Final Presentation Content - Slide 2]</h3></div>
-                        <div class="slide-page-block"><h3>[Final Presentation Content - Slide 3]</h3></div>
-                        <!-- You can continue adding slide block components sequentially here! -->
-                    </div>
+                <div class="iframe-wrapper">
+                    <!-- toolbar=0 hides native browser print and download systems -->
+                    <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
                 </div>
             </div>
 
@@ -163,44 +142,14 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 5</div>
+                    <div class="pdf-counter-badge">5 PAGES</div>
                 </div>
-                <div class="viewer-container" id="scroll-sched">
-                    <div class="slide-canvas">
-                        <div class="slide-page-block"><h3>[Message Schedule Content - Slide 1]</h3></div>
-                        <div class="slide-page-block"><h3>[Message Schedule Content - Slide 2]</h3></div>
-                        <div class="slide-page-block"><h3>[Message Schedule Content - Slide 3]</h3></div>
-                    </div>
+                <div class="iframe-wrapper">
+                    <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Active Scroll Listener and Numeric Calculator -->
-    <script>
-        function setupTracker(containerId, badgeId, totalPages) {
-            const container = document.getElementById(containerId);
-            const badge = document.getElementById(badgeId);
-
-            container.addEventListener('scroll', () => {
-                const maxScroll = container.scrollHeight - container.clientHeight;
-                if (maxScroll <= 0) return;
-                
-                // Read exact layout pixel movement natively from your website elements
-                const scrollPercent = container.scrollTop / maxScroll;
-                let currentPage = Math.ceil(scrollPercent * totalPages);
-                
-                if (currentPage <= 0) currentPage = 1;
-                if (currentPage > totalPages) currentPage = totalPages;
-
-                badge.textContent = `PAGE ${currentPage} / ${totalPages}`;
-            });
-        }
-
-        // Initialize trackers with exact page sets
-        setupTracker('scroll-pres', 'counter-pres', 126);
-        setupTracker('scroll-sched', 'counter-sched', 5);
-    </script>
 
 </body>
 </html>
