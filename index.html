@@ -111,12 +111,13 @@
             background-color: #ffffff;
         }
 
-        /* Object wrapper that opens the PDF natively into separate view pages */
+        /* Object wrapper configured to break out of inner scroll limits */
         object {
             width: 100%;
-            height: 2500px; /* Tall height allocation to distribute individual sheet offsets */
+            height: 100%; /* Spans matching height bounds */
             display: block;
             border: none;
+            overflow: hidden; /* Hard hides the redundant scrollbars */
         }
     </style>
 </head>
@@ -130,11 +131,11 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 14</div>
+                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 126</div>
                 </div>
                 <div class="viewer-container" id="scroll-pres">
                     <!-- toolbar=0 strips download panel and loads file natively -->
-                    <object data="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" type="application/pdf">
+                    <object data="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0&scrollbar=0" type="application/pdf">
                         <p>Your browser does not support inline PDFs.</p>
                     </object>
                 </div>
@@ -144,10 +145,10 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 2</div>
+                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 5</div>
                 </div>
                 <div class="viewer-container" id="scroll-sched">
-                    <object data="DISNEY_Message%20Schedule.pdf#toolbar=0" type="application/pdf">
+                    <object data="DISNEY_Message%20Schedule.pdf#toolbar=0&scrollbar=0" type="application/pdf">
                         <p>Your browser does not support inline PDFs.</p>
                     </object>
                 </div>
@@ -176,7 +177,7 @@
             });
         }
 
-        // Initialize trackers
+        // Initialize trackers with exact page sets
         setupTracker('scroll-pres', 'counter-pres', 126);
         setupTracker('scroll-sched', 'counter-sched', 5);
     </script>
