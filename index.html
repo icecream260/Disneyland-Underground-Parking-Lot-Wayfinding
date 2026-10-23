@@ -72,13 +72,26 @@
             text-align: left;
         }
 
+        .pdf-header-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 14px;
+            padding: 0 4px;
+        }
+
         .pdf-title {
             color: #475569;
             font-size: 1.1rem;
             font-weight: 500;
-            margin-bottom: 14px;
-            padding-left: 4px;
             letter-spacing: -0.2px;
+        }
+
+        /* Clean instructional text component */
+        .pdf-hint {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 400;
         }
 
         /* Massive, edge-to-edge structural iframe viewports */
@@ -98,16 +111,23 @@
         <h1>Disneyland Underground Parking Lot Wayfinding</h1>
 
         <div class="pdf-stack">
-            <!-- TOP PANEL: Final Presentation (Prioritized immediate priority load) -->
+            <!-- TOP PANEL: Final Presentation -->
             <div class="pdf-box">
-                <div class="pdf-title">Final Presentation</div>
-                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                <div class="pdf-header-wrapper">
+                    <div class="pdf-title">Final Presentation</div>
+                    <div class="pdf-hint">Use scroll or inline viewer tools to turn pages</div>
+                </div>
+                <!-- Changed to #navpanes=0 to restore document reader tools -->
+                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#navpanes=0" loading="eager" oncontextmenu="return false;"></iframe>
             </div>
 
-            <!-- BOTTOM PANEL: DISNEY Message Schedule (Standard load) -->
+            <!-- BOTTOM PANEL: DISNEY Message Schedule -->
             <div class="pdf-box">
-                <div class="pdf-title">DISNEY Message Schedule</div>
-                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                <div class="pdf-header-wrapper">
+                    <div class="pdf-title">DISNEY Message Schedule</div>
+                    <div class="pdf-hint">Use scroll or inline viewer tools to turn pages</div>
+                </div>
+                <iframe src="DISNEY_Message%20Schedule.pdf#navpanes=0" loading="lazy" oncontextmenu="return false;"></iframe>
             </div>
         </div>
     </div>
