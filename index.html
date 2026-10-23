@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disneyland Wayfinding Documentation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Soft moving liquid silver background */
+            background: linear-gradient(-45deg, #f8fafc, #e2e8f0, #cbd5e1, #f1f5f9);
+            background-size: 400% 400%;
+            animation: liquidFlow 18s ease infinite;
+            background-attachment: fixed;
+            padding: 24px;
+        }
+
+        @keyframes liquidFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Bright, high-gloss liquid glass pane stretched wider for two documents */
+        .light-glass-card {
+            background: rgba(255, 255, 255, 0.35); 
+            backdrop-filter: blur(30px) saturate(160%);
+            -webkit-backdrop-filter: blur(30px) saturate(160%);
+            border-radius: 28px;
+            /* Polished structural highlight edge */
+            border-top: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-left: 1.5px solid rgba(255, 255, 255, 0.4);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px -12px rgba(100, 116, 139, 0.15),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        h1 {
+            color: #334155;
+            font-size: 1.8rem;
+            margin-bottom: 28px;
+            font-weight: 600;
+            letter-spacing: -0.4px;
+        }
+
+        /* Responsive flex grid container for the two documents */
+        .pdf-grid {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        /* Individual PDF box layout */
+        .pdf-box {
+            flex: 1;
+            min-width: 340px; /* Forces layout to stack cleanly on smaller screens */
+            text-align: left;
+        }
+
+        .pdf-title {
+            color: #475569;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        /* Clean, borderless PDF viewport frames */
+        iframe {
+            width: 100%;
+            height: 650px; /* Comfortably tall scrolling viewport */
+            border: none;
+            border-radius: 16px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="light-glass-card">
+        <h1>Disneyland Underground Parking Lot Wayfinding</h1>
+
+        <div class="pdf-grid">
+            <!-- Left PDF Panel -->
+            <div class="pdf-box">
+                <div class="pdf-title">DISNEY Message Schedule</div>
+                <!-- toolbar=0 strips standard user interface options -->
+                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" oncontextmenu="return false;"></iframe>
+            </div>
+
+            <!-- Right PDF Panel -->
+            <div class="pdf-box">
+                <div class="pdf-title">Final Presentation</div>
+                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" oncontextmenu="return false;"></iframe>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
