@@ -36,7 +36,6 @@
             backdrop-filter: blur(30px) saturate(160%);
             -webkit-backdrop-filter: blur(30px) saturate(160%);
             border-radius: 28px;
-            /* Polished structural highlight edge */
             border-top: 1.5px solid rgba(255, 255, 255, 0.6);
             border-left: 1.5px solid rgba(255, 255, 255, 0.4);
             border-right: 1px solid rgba(255, 255, 255, 0.2);
@@ -57,7 +56,6 @@
             letter-spacing: -0.4px;
         }
 
-        /* Clean vertical stack setup with generous block padding gaps */
         .pdf-stack {
             display: flex;
             flex-direction: column;
@@ -66,7 +64,6 @@
             width: 100%;
         }
 
-        /* Full width structural box container */
         .pdf-box {
             width: 100%;
             text-align: left;
@@ -92,25 +89,50 @@
             letter-spacing: -0.2px;
         }
 
-        /* Distinct, clean custom counter indicators */
+        /* Dynamic reading counter badges */
         .pdf-counter-badge {
-            background: rgba(71, 85, 105, 0.1);
-            color: #475569;
+            background: #007aff;
+            color: #ffffff;
             font-size: 0.85rem;
             font-weight: 600;
-            padding: 4px 12px;
+            padding: 4px 14px;
             border-radius: 980px;
             letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        /* Scrollable tracking frame container */
+        .viewer-container {
+            width: 100%;
+            height: 750px;
+            overflow-y: scroll;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            background-color: #ffffff;
+            position: relative;
+        }
+
+        /* Custom tracking scrollbar elements */
+        .viewer-container::-webkit-scrollbar {
+            width: 10px;
+        }
+        .viewer-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 16px;
+        }
+        .viewer-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 16px;
+            border: 2px solid #f1f5f9;
         }
 
         /* Massive, edge-to-edge structural iframe viewports with strict restriction parameters */
         iframe {
             width: 100%;
-            height: 750px;
+            height: 100%; /* Spans full internal scroll window */
             border: none;
-            border-radius: 16px;
-            background-color: #ffffff;
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+            display: block;
         }
     </style>
 </head>
@@ -120,26 +142,57 @@
         <h1>Disneyland Underground Parking Lot Wayfinding</h1>
 
         <div class="pdf-stack">
-            <!-- TOP PANEL: Final Presentation -->
+            <!-- TOP PANEL: Final Presentation (14 Pages) -->
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <div class="pdf-counter-badge">14 PAGES</div>
+                    <div id="counter-pres" class="pdf-counter-badge">PAGE 1 / 14</div>
                 </div>
-                <!-- toolbar=0 safely locks out download menus -->
-                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                <div class="viewer-container" id="scroll-pres">
+                    <!-- toolbar=0 safely locks out download menus -->
+                    <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
+                </div>
             </div>
 
-            <!-- BOTTOM PANEL: DISNEY Message Schedule -->
+            <!-- BOTTOM PANEL: DISNEY Message Schedule (2 Pages) -->
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div class="pdf-counter-badge">2 PAGES</div>
+                    <div id="counter-sched" class="pdf-counter-badge">PAGE 1 / 2</div>
                 </div>
-                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                <div class="viewer-container" id="scroll-sched">
+                    <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Live Position Calculator Script -->
+    <script>
+        function setupTracker(containerId, badgeId, totalPages) {
+            const container = document.getElementById(containerId);
+            const badge = document.getElementById(badgeId);
+
+            container.addEventListener('scroll', () => {
+                // Calculate scroll ratio inside viewport box
+                const maxScroll = container.scrollHeight - container.clientHeight;
+                if (maxScroll <= 0) return;
+                
+                const scrollPercent = container.scrollTop / maxScroll;
+                
+                // Map position mathematically to matching page zones
+                let currentPage = Math.ceil(scrollPercent * totalPages);
+                if (currentPage === 0) currentPage = 1;
+                if (currentPage > totalPages) currentPage = totalPages;
+
+                badge.textContent = `PAGE ${currentPage} / ${totalPages}`;
+            });
+        }
+
+        // Initialize calculations for both target slide packs
+        setupTracker('scroll-pres', 'counter-pres', 14);
+        setupTracker('scroll-sched', 'counter-sched', 2);
+    </script>
 
 </body>
 </html>
