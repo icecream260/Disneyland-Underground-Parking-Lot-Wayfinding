@@ -72,29 +72,38 @@
             text-align: left;
         }
 
+        /* Header wrapper styled to look like an integrated status bar */
         .pdf-header-wrapper {
             display: flex;
             justify-content: space-between;
-            align-items: flex-end;
+            align-items: center;
             margin-bottom: 14px;
-            padding: 0 4px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(148, 163, 184, 0.05);
         }
 
         .pdf-title {
-            color: #475569;
-            font-size: 1.1rem;
-            font-weight: 500;
+            color: #334155;
+            font-size: 1rem;
+            font-weight: 600;
             letter-spacing: -0.2px;
         }
 
-        /* Clean instructional text component */
-        .pdf-hint {
-            color: #94a3b8;
+        /* Distinct, clean custom counter indicators */
+        .pdf-counter-badge {
+            background: rgba(71, 85, 105, 0.1);
+            color: #475569;
             font-size: 0.85rem;
-            font-weight: 400;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 980px;
+            letter-spacing: 0.5px;
         }
 
-        /* Massive, edge-to-edge structural iframe viewports */
+        /* Massive, edge-to-edge structural iframe viewports with strict restriction parameters */
         iframe {
             width: 100%;
             height: 750px;
@@ -115,19 +124,19 @@
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">Final Presentation</div>
-                    <div class="pdf-hint">Use scroll or inline viewer tools to turn pages</div>
+                    <div class="pdf-counter-badge">14 PAGES</div>
                 </div>
-                <!-- Changed to #navpanes=0 to restore document reader tools -->
-                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#navpanes=0" loading="eager" oncontextmenu="return false;"></iframe>
+                <!-- toolbar=0 safely locks out download menus -->
+                <iframe src="DariaEsteeTracie_FinalPresentation.pdf#toolbar=0" loading="eager" oncontextmenu="return false;"></iframe>
             </div>
 
             <!-- BOTTOM PANEL: DISNEY Message Schedule -->
             <div class="pdf-box">
                 <div class="pdf-header-wrapper">
                     <div class="pdf-title">DISNEY Message Schedule</div>
-                    <div class="pdf-hint">Use scroll or inline viewer tools to turn pages</div>
+                    <div class="pdf-counter-badge">2 PAGES</div>
                 </div>
-                <iframe src="DISNEY_Message%20Schedule.pdf#navpanes=0" loading="lazy" oncontextmenu="return false;"></iframe>
+                <iframe src="DISNEY_Message%20Schedule.pdf#toolbar=0" loading="lazy" oncontextmenu="return false;"></iframe>
             </div>
         </div>
     </div>
